@@ -18,4 +18,6 @@ WORKDIR /videos
 
 RUN groupadd -r convert && useradd --no-log-init -r -g convert convert
 
+USER convert
+
 ENTRYPOINT [ "entrypoint.sh" ]
