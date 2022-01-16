@@ -2,6 +2,9 @@ FROM linuxserver/ffmpeg:version-4.4-cli
 
 ARG TARGETPLATFORM
 
+RUN apt-get update && apt-get install -y \
+    fuse
+
 # renovate: datasource=github-releases depName=rclone/rclone
 ARG RCLONE_VERSION=v1.57.0
 RUN RCLONE_PLATFORM=$(echo $TARGETPLATFORM | sed 's|/|-|g' ) && \
