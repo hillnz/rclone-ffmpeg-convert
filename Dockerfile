@@ -16,4 +16,6 @@ COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 
 WORKDIR /videos
 
+RUN groupadd fuse && usermod -a -G fuse abc
+
 ENTRYPOINT [ "entrypoint.sh" ]

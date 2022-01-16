@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+groupmod -o -g "$PGID" abc
+usermod -o -u "$PUID" abc
+
+s6-setuidgid abc \
 rclone mount -v \
     --config="$RCLONE_CONFIG" \
     --vfs-cache-mode writes \
@@ -9,6 +13,7 @@ rclone_pid=$!
 
 while true; do
 
+    s6-setuidgid abc \
     convert.sh
 
     # Check if rclone is still running
