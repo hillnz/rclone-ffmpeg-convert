@@ -3,7 +3,7 @@
 groupmod -o -g "$PGID" abc
 usermod -o -u "$PUID" abc
 
-chown abc:abc /videos
+chown -R abc:abc /videos
 
 s6-setuidgid abc \
 rclone mount -v \
@@ -13,6 +13,11 @@ rclone mount -v \
     "${RCLONE_MOUNT_DIR}" \
     "/videos" &
 rclone_pid=$!
+
+# Wait for mount
+while ! mountpoint -q /videos; do
+    sleep 1
+done
 
 while true; do
 
