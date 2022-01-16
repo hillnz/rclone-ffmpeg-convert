@@ -14,8 +14,9 @@ RUN RCLONE_PLATFORM=$(echo $TARGETPLATFORM | sed 's|/|-|g' ) && \
 COPY convert.sh /usr/local/bin/convert.sh
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 
-WORKDIR /videos
+RUN groupadd fuse && usermod -a -G fuse abc && \
+    mkdir /videos
 
-RUN groupadd fuse && usermod -a -G fuse abc
+WORKDIR /videos
 
 ENTRYPOINT [ "entrypoint.sh" ]

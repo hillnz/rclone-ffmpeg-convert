@@ -3,6 +3,8 @@
 groupmod -o -g "$PGID" abc
 usermod -o -u "$PUID" abc
 
+chown abc:abc /videos
+
 s6-setuidgid abc \
 rclone mount -v \
     --cache-dir /tmp/cache \
