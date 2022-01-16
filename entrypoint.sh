@@ -14,8 +14,11 @@ rclone mount -v \
     "/videos" &
 rclone_pid=$!
 
-# Wait for mount
-while ! mountpoint -q /videos; do
+# Wait for mount up to 1 minute
+for _ in $(seq 1 60); do
+    if mountpoint -q /videos; then
+        break
+    fi
     sleep 1
 done
 
