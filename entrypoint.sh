@@ -5,6 +5,7 @@ usermod -o -u "$PUID" abc
 
 s6-setuidgid abc \
 rclone mount -v \
+    --cache-dir /tmp/cache \
     --config="$RCLONE_CONFIG" \
     --vfs-cache-mode writes \
     "${RCLONE_MOUNT_DIR}" \
