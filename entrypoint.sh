@@ -16,7 +16,7 @@ rclone_pid=$!
 
 # Wait for mount up to 1 minute
 for _ in $(seq 1 60); do
-    if mountpoint -q /videos; then
+    if s6-setuidgid abc mountpoint -q /videos; then
         break
     fi
     sleep 1
