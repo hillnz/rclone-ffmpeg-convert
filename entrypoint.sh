@@ -15,12 +15,19 @@ rclone mount -v \
 rclone_pid=$!
 
 # Wait for mount up to 1 minute
+echo "Waiting for mount..."
 for _ in $(seq 1 60); do
     if s6-setuidgid abc mountpoint -q /videos; then
         break
     fi
     sleep 1
+    echo "Still waiting for mount..."
 done
+
+if ! s6-setuidgid abc mountpoint -q /videos; then
+    echo "Failed to mount"
+    exit 1
+fi
 
 while true; do
 

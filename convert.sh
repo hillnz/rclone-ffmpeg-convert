@@ -16,10 +16,14 @@ trap 'cleanup' EXIT
 shopt -s globstar
 for ext in "${VIDEO_EXTENSIONS[@]}"; do
 
+    echo "Checking files with extension '$ext'..."
+
     for f in **/*."$ext"; do
         if [ "$f" = "**/*.$ext" ]; then
             continue
         fi
+
+        echo "Checking '$f'..."
 
         this="$f"
         output="${tmp_dir}/$(basename "$f")"
