@@ -18,7 +18,7 @@ for ext in "${VIDEO_EXTENSIONS[@]}"; do
 
     echo "Checking files with extension $ext..."
 
-    find . -name "*.$ext" -print0 | while IFS= read -r -d '' f; do
+    find /videos -name "*.$ext" -print0 | while IFS= read -r -d '' f; do
 
         echo "Checking $f..."
 
