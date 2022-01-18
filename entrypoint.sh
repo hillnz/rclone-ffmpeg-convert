@@ -32,7 +32,7 @@ fi
 while true; do
 
     s6-setuidgid abc \
-    bash "$(which convert.sh)"
+    python3 "$(which convert.py)"
 
     # Check if rclone is still running
     if ! kill -0 "$rclone_pid" 2>/dev/null; then
