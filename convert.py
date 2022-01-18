@@ -46,7 +46,8 @@ try:
                     '-of', 'default=noprint_wrappers=1:nokey=1', 
                     this
                 ], check=True, capture_output=True).stdout.decode('utf-8').strip()
-            except Exception:
+            except Exception as err:
+                print(err)
                 print(f"ffprobe couldn't read {f}")
                 continue
             
