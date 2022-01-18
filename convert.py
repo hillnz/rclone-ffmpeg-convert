@@ -4,7 +4,7 @@ from glob import iglob
 from os import remove
 from os.path import basename, join
 from shutil import move, rmtree
-from subprocess import run
+from subprocess import PIPE, run
 from tempfile import mkdtemp
 
 VIDEO_DIR = '/videos'
@@ -45,7 +45,7 @@ try:
                     '-show_entries', 'stream=codec_name', 
                     '-of', 'default=noprint_wrappers=1:nokey=1', 
                     this
-                ], check=True, capture_output=True).stdout.decode('utf-8').strip()
+                ], check=True, stdout=PIPE).stdout.decode('utf-8').strip()
             except Exception as err:
                 print(err)
                 print(f"ffprobe couldn't read {f}")
