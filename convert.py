@@ -11,6 +11,7 @@ VIDEO_DIR = '/videos'
 VIDEO_EXTENSIONS = ('mp4', 'mkv', 'mov', 'm4v', 'ts')
 TARGET_CODEC = "hevc"
 TARGET_ENCODER = "libx265"
+TARGET_CRF = "26"
 
 tmp_dir = mkdtemp()
 this = ""
@@ -61,6 +62,7 @@ try:
                     'ffmpeg', 
                     '-i', this,
                     '-c:v', TARGET_ENCODER,
+                    '-crf', TARGET_CRF,
                     '-c:a', 'copy',
                     output
                 ], check=True)
