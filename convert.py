@@ -25,6 +25,11 @@ def cleanup():
         pass
 
 
+def get_duration(file):
+    cmd = ['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'default=noprint_wrappers=1:nokey=1', file]
+    return float(run(cmd, check=True, stdout=PIPE).stdout.decode('utf-8').strip())
+
+
 try:
 
     for ext in VIDEO_EXTENSIONS:
@@ -57,6 +62,8 @@ try:
 
             print(f"Converting {this}")
             try:
+                original_duration = get_duration(this)
+
                 run([
                     'nice', '-n', '10', 
                     'ffmpeg', 
@@ -66,6 +73,12 @@ try:
                     '-c:a', 'copy',
                     output
                 ], check=True)
+
+                # sense check - duration should be almost the same
+                new_duration = get_duration(output)
+                if abs(original_duration - new_duration) > 1:
+                    print(f"Error: {this} duration changed from {original_duration} to {new_duration}")
+                    raise Exception("Duration changed")
             except Exception:
                 print(f"Failed to convert {this}")
                 remove(output)
